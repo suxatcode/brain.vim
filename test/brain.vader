@@ -1,0 +1,9 @@
+Execute (source vimrc.brain):
+  source ./etc/vimrc.brain
+Execute (set brain session dir to cwd):
+  let g:brain_session_dir = "."
+After (remove ./test.vim):
+  echo system("rm ./test.vim")
+Execute (run Mkbrain command):
+  Mkbrain test.vim
+  AssertEqual system('ls test.vim'), "test.vim\n", "session file must exist"

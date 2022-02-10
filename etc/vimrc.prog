@@ -1,0 +1,38 @@
+" programming languages
+
+" --- usefull ---
+fu! InitMake()
+  setl ts=4 sts=4 sw=4 noet
+endfu
+au BufRead,BufNewFile Makefile,*.mk call InitMake()
+
+fu! InitGo()
+  setl ts=4 sts=4 sw=4
+  nmap <buffer> <F5> :w<CR>:!go test<CR>
+  nmap <buffer> <F3> :w<CR>:!go run %<CR>
+  nmap <buffer> == :!cd %:h && go fmt<CR>
+  nmap <buffer> gd :YcmCompleter GoToDeclaration<CR>
+  nmap <buffer> gu :YcmCompleter GoToReferences<CR>
+  nmap <buffer> <space>u :!cd %:h && go test<CR>
+endfu
+au BufRead,BufNewFile *.go call InitGo()
+
+" --- testing ---
+fu! InitJava()
+  setl ts=4 sts=4 sw=4
+  nmap <buffer> <F2> :w<CR>:!javac %<CR>
+  nmap <buffer> <F3> :!java -cp %:h %:t:r<CR>
+endfu
+fu! SourceJavaSkeleton()
+  r ~/misc/test/java/skeleton.java
+  normal ggdd
+  exe "normal /XXX\<CR>ciw".expand('%:t:r')."\<ESC>"
+endfu
+au BufRead,BufNewFile *.java call InitJava()
+au BufNewFile *.java call SourceJavaSkeleton()
+
+fu! InitKt()
+  nmap <buffer> <F2> :w<CR>:!kotlinc -include-runtime -d %:t:r.jar %<CR>
+  nmap <buffer> <F3> :w<CR>:!java -jar %:t:r.jar<CR>
+endfu
+au BufRead,BufNewFile *.kt call InitKt()

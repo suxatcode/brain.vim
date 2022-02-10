@@ -1,0 +1,3 @@
+[submodule "vader.vim"]
+	path = third_party/vader.vim
+	url = https://github.com/junegunn/vader.vim
