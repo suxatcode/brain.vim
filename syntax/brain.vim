@@ -6,7 +6,7 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-syn match helpHeadline		"^[-A-Z .][-A-Z0-9 .()_]*\ze\(\s\+\*\|$\)"
+syn match helpHeadline		"^[-A-Z0-9_.][-A-Z0-9 .()_]*\ze\(\s\+\*\|$\)"
 syn match helpSectionDelim	"^===.*===$"
 syn match helpSectionDelim	"^---.*--$"
 if has("ebcdic")
@@ -32,48 +32,9 @@ syn match helpGraphic		".* \ze`$" nextgroup=helpIgnore
 syn keyword helpNote		note Note NOTE note: Note: NOTE: Notes Notes:
 syn keyword helpWarning		WARNING WARNING: Warning:
 syn keyword helpDeprecated	DEPRECATED DEPRECATED: Deprecated:
-syn match helpSpecial		"\<N\>"
-syn match helpSpecial		"\<N\.$"me=e-1
-syn match helpSpecial		"\<N\.\s"me=e-2
-syn match helpSpecial		"(N\>"ms=s+1
-
-syn match helpSpecial		"\[N]"
-" avoid highlighting N  N in help.txt
-syn match helpSpecial		"N  N"he=s+1
-syn match helpSpecial		"Nth"me=e-2
-syn match helpSpecial		"N-1"me=e-2
-syn match helpSpecial		"{[-a-zA-Z0-9'"*+/:%#=[\]<>.,]\+}"
-syn match helpSpecial		"\s\[[-a-z^A-Z0-9_]\{2,}]"ms=s+1
-syn match helpSpecial		"<[-a-zA-Z0-9_]\+>"
-syn match helpSpecial		"<[SCM]-.>"
-syn match helpNormal		"<---*>"
-syn match helpSpecial		"\[range]"
-syn match helpSpecial		"\[line]"
-syn match helpSpecial		"\[count]"
-syn match helpSpecial		"\[offset]"
-syn match helpSpecial		"\[cmd]"
-syn match helpNormal		"vim9\[cmd]"
-syn match helpSpecial		"\[num]"
-syn match helpSpecial		"\[+num]"
-syn match helpSpecial		"\[-num]"
-syn match helpSpecial		"\[+cmd]"
-syn match helpSpecial		"\[++opt]"
-syn match helpSpecial		"\[arg]"
-syn match helpSpecial		"\[arguments]"
-syn match helpSpecial		"\[ident]"
-syn match helpSpecial		"\[addr]"
-syn match helpSpecial		"\[group]"
 " Don't highlight [converted] and others that do not have a tag
 syn match helpNormal		"\[\(readonly\|fifo\|socket\|converted\|crypted\)]"
 
-syn match helpSpecial		"CTRL-."
-syn match helpSpecial		"CTRL-SHIFT-."
-syn match helpSpecial		"CTRL-Break"
-syn match helpSpecial		"CTRL-PageUp"
-syn match helpSpecial		"CTRL-PageDown"
-syn match helpSpecial		"CTRL-Insert"
-syn match helpSpecial		"CTRL-Del"
-syn match helpSpecial		"CTRL-{char}"
 syn region helpNotVi		start="{Vi[: ]" start="{not" start="{only" end="}" contains=helpLeadBlank,helpHyperTextJump
 syn match helpLeadBlank		"^\s\+" contained
 
@@ -195,4 +156,94 @@ let b:current_syntax = "help"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-" vim: ts=8 sw=2
+
+
+" BEGIN: skep's changes
+"
+" More complex option highlighting. And single letter options.
+" Match examples:
+"   '/asd' 'cd somewhere' '-test' ...
+syn match helpOption        "'[A-Za-z/+-]\{1,30\}\([-_]\?[/A-Za-z]*\)*'"
+" And stuff in {}-blocks
+syn match helpSpecial       "{[-a-zA-Z0-9'"*+/:%#=[\]<>.,_]\+}"
+" And stuff in []-options
+syn match helpSpecial       "\s\[[-a-z^A-Z0-9_?]\{2,}]"ms=s+1
+
+syn match helpVim "'\(![a-z]\+\|tabe\|call\|Lnk\|Doc\|Src\|\/\|Man\|Img\|r\(ead\)\?\|Pdf\) .\{-}\( &\)\?'"
+syn match helpVim "'\(\/\|?\).\{-}'"
+
+syn clear helpHyperTextJump
+syn clear helpBar
+
+" This is for accents on letters between * *!
+syn match helpHyperTextEntry "\/\@=\*[^"*|]\+\*" contains=helpStar
+
+" ?
+syn keyword Notes Note
+hi def link Notes CursorLine
+
+" Enable unimportant notes, which almost completely blend out of view.
+syn match DarkComment ".*\s\zs\/\/.*$"
+hi DarkComment ctermfg=0
+
+syn match htmlBold "\*\*.*\*\*" contains=hideThatPlx
+syn match hideThatPlx contained "\*" conceal
+
+if expand('%') =~ 'lang$\|^lang\|/lang\.'
+    syn match ControlFlow "\<goto\>"
+    syn match ControlFlow "\<return\>"
+    hi def link ControlFlow ModeMsg
+
+    if exists('b:current_syntax') | unlet b:current_syntax | endi
+    syn include @pyTop syntax/python.vim
+    syn region pyBlock matchgroup=DarkComment start='<%py%%\@!' end='%%\@!py%>' contains=@pyTop keepend
+    unlet b:current_syntax
+
+    syn include @rubyTop syntax/ruby.vim
+    syn region rubyBlock matchgroup=DarkComment start='<%ruby%%\@!' end='%%\@!ruby%>' contains=@rubyTop keepend
+    unlet b:current_syntax
+
+    syn include @cTop syntax/c.vim
+    syn region cBlock matchgroup=DarkComment start='<%c%%\@!' end='%%\@!c%>' contains=@cTop keepend
+    unlet b:current_syntax
+
+    syn include @cppTop syntax/cpp.vim
+    syn region cppBlock matchgroup=DarkComment start='<%cpp%%\@!' end='%%\@!cpp%>' contains=@cppTop keepend
+    unlet b:current_syntax
+
+    syn include @htmlTop syntax/html.vim
+    syn region htmlBlock matchgroup=DarkComment start='<%html%%\@!' end='%%\@!html%>' contains=@htmlTop keepend
+    unlet b:current_syntax
+
+    syn include @armTop syntax/arm.vim
+    syn region armBlock matchgroup=DarkComment start='<%arm%%\@!' end='%%\@!arm%>' contains=@armTop keepend
+    unlet b:current_syntax
+
+    syn include @shTop syntax/sh.vim
+    syn region shBlock matchgroup=DarkComment start='<%sh%%\@!' end='%%\@!sh%>' contains=@shTop keepend
+    unlet b:current_syntax
+
+    syn include @luaTop syntax/lua.vim
+    syn region luaBlock matchgroup=DarkComment start='<%lua%%\@!' end='%%\@!lua%>' contains=@luaTop keepend
+    unlet b:current_syntax
+
+    syn include @goTop syntax/go.vim
+    syn region goBlock matchgroup=DarkComment start='<%go%%\@!' end='%%\@!go%>' contains=@goTop keepend
+    unlet b:current_syntax
+
+    syn include @nasmTop syntax/nasm.vim
+    syn region nasmBlock matchgroup=DarkComment start='<%nasm%%\@!' end='%%\@!nasm%>' contains=@nasmTop keepend
+    unlet b:current_syntax
+
+    syn include @gasTop syntax/gas.vim
+    syn region gasBlock matchgroup=DarkComment start='<%gas%%\@!' end='%%\@!gas%>' contains=@gasTop keepend
+    unlet b:current_syntax
+
+    syn include @rustTop syntax/rust.vim
+    syn region rustBlock matchgroup=DarkComment start='<%rust%%\@!' end='%%\@!rust%>' contains=@rustTop keepend
+    unlet b:current_syntax
+
+endi
+
+" enable automatic minus- and bullet-list indentation
+let &formatlistpat = '^\s*\d\+[\]:.)}\t ]\s*\|^\s*[-*+]\s\+'
