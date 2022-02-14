@@ -139,3 +139,6 @@ endfu
 "  return len(a:i1) > len(a:i2)
 "endfu
 com! -nargs=? -complete=customlist,_MkbrainComplete Mkbrain call _Mkbrain(<f-args>)
+
+fu! brain#brain()
+endfu

@@ -1,11 +1,15 @@
-*brain.txt*          brain, a note taking addon for Vim.           *brain*
+*brain.txt*          brain, a note taking addon for Vim.               *brain*
 
                               BRAIN MANUAL
 
-1. About brain                                    |brain-about|
+1. About brain                                                   |brain-about|
 
-=============================================================================
+==============================================================================
 1. ABOUT BRAIN ~
-                                                               *brain-about*
+                                                                 *brain-about*
+To initialize add the following line to your vimrc.
+>
+ call brain#brain()
+<
 
-" vim: set expandtab sts=2 ts=2 sw=2 tw=78 ft=help norl:
+" vim: et sts=2 ts=2 sw=2 tw=78 ft=help norl:
