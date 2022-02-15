@@ -1,0 +1,19 @@
+Execute (source syntax):
+  source ./syntax/brain.vim
+Given (some text):
+  a
+  b
+  c
+  d
+  e
+Execute (run Embed py on line 3):
+  normal 3G
+  Embed py
+Expect (embedded 3,4 lines in tags):
+  a
+  b
+   <%py%
+  c
+  d
+   %py%>
+  e
