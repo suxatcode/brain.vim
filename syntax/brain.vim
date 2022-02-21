@@ -220,9 +220,9 @@ syn include @htmlTop syntax/html.vim
 syn region htmlBlock matchgroup=DarkComment start='<%html%%\@!' end='%%\@!html%>' contains=@htmlTop keepend
 unlet b:current_syntax
 
-syn include @armTop syntax/arm.vim
-syn region armBlock matchgroup=DarkComment start='<%arm%%\@!' end='%%\@!arm%>' contains=@armTop keepend
-unlet b:current_syntax
+"syn include @armTop syntax/arm.vim
+"syn region armBlock matchgroup=DarkComment start='<%arm%%\@!' end='%%\@!arm%>' contains=@armTop keepend
+"unlet b:current_syntax
 
 syn include @shTop syntax/sh.vim
 syn region shBlock matchgroup=DarkComment start='<%sh%%\@!' end='%%\@!sh%>' contains=@shTop keepend
