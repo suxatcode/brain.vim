@@ -6,20 +6,21 @@ nmap <space>e "ayi':<C-r>a<CR>lh
 let g:brain_lnk_dir_search_list = $BRAIN_DIR_LIST_HOME_REL
 fu! BrainFindFile(file)
   let target = a:file
+  if target =~? '^\/'
+    return target
+  endif
+  if filereadable("./" . target)
+    return "./" . target
+  endif
   let dirs = split(g:brain_lnk_dir_search_list, ',')
-  if len(dirs) == 0 | let dirs = [$HOME] | endif
-  if target !~? '^\/'
-    let startswith = matchstr(target, '.\{-}\ze\/')
-    if startswith != ""
-      " Note: We break if we find, thus this list demands precedence.
-      for i in dirs
-        if isdirectory($HOME . '/' . i . '/' . startswith)
-          let target = $HOME . '/' . i . '/' . a:file
-          break
-        endi
-      endfo
+  if len(dirs) == 0
+    return $HOME . target
+  endif
+  for i in dirs
+    if filereadable($HOME . '/' . i . '/' . target)
+      return $HOME . '/' . i . '/' . target
     endi
-  endi
+  endfo
   return target
 endf
 
@@ -70,8 +71,8 @@ com! -nargs=0 Content :call BrainGrepHelpContent_(1)
 com! -nargs=0 ContentVerbose :call BrainGrepHelpContent_(2)
 com! -nargs=0 ContentShort :call BrainGrepHelpContent_()
 
-" search through whole brain
-com! -nargs=* GrepBrain :grep -I --exclude='*~' --exclude='*.swp' <args> $(find $BRAIN_DIR_LIST_HOME_REL   -name '*.lang' -or -name 'lang.*')
+" search through whole brain (zsh specific) TODO: does not work properly |-(
+"com! -nargs=* GrepBrain :grep -I --exclude='*~' --exclude='*.swp' <args> $(cd;dirs=(${BRAIN_DIR_LIST_HOME_REL//,/ });find $dirs   -name '*.lang' -or -name 'lang.*')
 
 " linking to files
 fu! BrainGotoHeadl(hdl)

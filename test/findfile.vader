@@ -1,0 +1,24 @@
+Execute (source vimrc.brain):
+  source ./autoload/brain.vim
+Before (create tmp/a,b directories):
+  echo system("mkdir -p ".$HOME."/tmpBRAIN/{a,b}")
+  echo system("touch ".$HOME."/tmpBRAIN/a/c")
+  echo system("touch ".$HOME."/tmpBRAIN/b/d")
+After (remove ./tmpBRAIN):
+  echo system("rm -r ".$HOME."/tmpBRAIN")
+Execute (run BrainFindFile for relative to tmp path):
+  let g:brain_lnk_dir_search_list = "tmpBRAIN"
+  AssertEqual BrainFindFile("a/c"), "".$HOME."/tmpBRAIN/a/c"
+  AssertEqual BrainFindFile("b/d"), "".$HOME."/tmpBRAIN/b/d"
+Execute (run BrainFindFile for relative to tmp sub path):
+  let g:brain_lnk_dir_search_list = "tmpBRAIN/a,tmpBRAIN/b"
+  AssertEqual BrainFindFile("c"), "".$HOME."/tmpBRAIN/a/c"
+  AssertEqual BrainFindFile("d"), "".$HOME."/tmpBRAIN/b/d"
+Before (create ./tmpBRAIN.f):
+  echo system("mkdir ./tmpBRAIN")
+  echo system("touch ./tmpBRAIN/f")
+After (remove ./tmpBRAIN.f):
+  echo system("rm -r ./tmpBRAIN")
+Execute (run BrainFindFile for relative to cwd):
+  let g:brain_lnk_dir_search_list = "tmpBRAIN"
+  AssertEqual BrainFindFile("tmpBRAIN/f"), "./tmpBRAIN/f"
