@@ -163,7 +163,7 @@ unlet s:cpo_save
 " More complex option highlighting. And single letter options.
 " Match examples:
 "   '/asd' 'cd somewhere' '-test' ...
-syn match helpOption        "'[A-Za-z/+-]\{1,30\}\([-_]\?[/A-Za-z]*\)*'"
+syn match helpOption        "'[A-Za-z0-9/+-]\{1,30\}\([-_]\?[/A-Za-z]*\)*'"
 " And stuff in {}-blocks
 syn match helpSpecial       "{[-a-zA-Z0-9'"*+/:%#=[\]<>.,_]\+}"
 " And stuff in []-options
