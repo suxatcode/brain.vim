@@ -248,5 +248,9 @@ syn include @rustTop syntax/rust.vim
 syn region rustBlock matchgroup=DarkComment start='<%rust%%\@!' end='%%\@!rust%>' contains=@rustTop keepend
 unlet b:current_syntax
 
+syn include @jsTop syntax/javascriptreact.vim
+syn region jsBlock matchgroup=DarkComment start='<%js%%\@!' end='%%\@!js%>' contains=@jsTop keepend
+unlet b:current_syntax
+
 " enable automatic minus- and bullet-list indentation
 let &formatlistpat = '^\s*\d\+[\]:.)}\t ]\s*\|^\s*[-*+]\s\+'
