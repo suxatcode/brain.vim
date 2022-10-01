@@ -7,4 +7,4 @@ set rtp+=after
 filetype plugin indent on
 syntax enable
 VIMRC
-) -c 'Vader! test/*' > /dev/null
+) -c 'Vader! test/*' > /dev/null && echo -e "\e[;32mSuccess\e[;m" || echo -e "\e[;31mFailure\e[;m"

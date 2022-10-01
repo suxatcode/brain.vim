@@ -1,0 +1,4 @@
+Execute (source vimrc.brain):
+  source ./autoload/brain.vim
+Execute (BrainBackgroundProcNoStderr):
+  AssertEqual BrainBackgroundProcNoStderr("ls", "."), "!ls . 2>/dev/null &"

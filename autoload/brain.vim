@@ -30,17 +30,23 @@ fu! BrainBackgroundProcNoStderr(proc, ...)
     let args = args[0]
   endif
   let cmd = "!".a:proc." " . join(args, " ") . " 2>/dev/null &"
-  "echoerr cmd
-  exec cmd
+  return cmd
 endfu
 fu! BrainImg_(file)
-  call BrainBackgroundProcNoStderr("eog", BrainFindFile(a:file))
+  let cmd = BrainBackgroundProcNoStderr("eog", BrainFindFile(a:file))
+  exec cmd
 endfu
 fu! BrainPdf_(...)
-  call BrainBackgroundProcNoStderr("evince", BrainFindFile(a:000))
+  let cmd = BrainBackgroundProcNoStderr("evince", BrainFindFile(a:000))
+  exec cmd
+endfu
+fu! BrainEpub_(...)
+  let cmd = BrainBackgroundProcNoStderr("ebook-viewer", BrainFindFile(a:000))
+  echoerr cmd
 endfu
 com! -nargs=1 Img call BrainImg_(<f-args>)
 com! -nargs=+ Pdf call BrainPdf_(<f-args>)
+com! -nargs=+ Epub call BrainEpub_(<f-args>)
 
 fu! BrainTabTmpReadCmd(...)
   exec "normal :tabe\<CR>"

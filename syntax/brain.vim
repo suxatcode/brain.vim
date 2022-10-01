@@ -169,7 +169,7 @@ syn match helpSpecial       "{[-a-zA-Z0-9'"*+/:%#=[\]<>.,_]\+}"
 " And stuff in []-options
 syn match helpSpecial       "\s\[[-a-z^A-Z0-9_?]\{2,}]"ms=s+1
 
-syn match helpVim "'\(![a-z]\+\|tabe\|call\|Lnk\|Doc\|Src\|\/\|Man\|Img\|r\(ead\)\?\|Pdf\) .\{-}\( &\)\?'"
+syn match helpVim "'\(![a-z]\+\|tabe\|call\|Lnk\|Doc\|Src\|\/\|Man\|Img\|r\(ead\)\?\|Pdf\|Epub\) .\{-}\( &\)\?'"
 syn match helpVim "'\(\/\|?\).\{-}'"
 
 syn clear helpHyperTextJump
