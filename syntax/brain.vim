@@ -179,7 +179,7 @@ syn clear helpBar
 syn match helpHyperTextEntry "\/\@=\*[^"*|]\+\*" contains=helpStar
 
 " ?
-syn keyword Notes Note Note: Example Example:
+syn keyword Notes Note Note: Example Example: Structure Structure:
 hi def link Notes CursorLine
 
 " Enable unimportant notes, which almost completely blend out of view.

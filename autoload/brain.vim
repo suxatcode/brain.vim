@@ -55,9 +55,9 @@ com! -nargs=* TabTmp call BrainTabTmpReadCmd(<f-args>)
 fu! BrainGrepHelpContent_(...)
   let verbose = 0
   let exe_init = "normal o\<ESC>mt"
-  let exe_str             = "r !egrep -no \"^[A-Z][A-Z0-9 -]+ \\*\" %"
-  let exe_str_verbose     = "r !egrep -no \"(^[A-Z][A-Z0-9 -]+ \\*|^=== .* ===)\" %"
-  let exe_str_veryverbose = "r !egrep -no \"(^[A-Z][A-Z0-9 -]+ \\*|^=== .* ===|^.*\~$)\" %"
+  let exe_str             = "r !grep -E -no \"^[A-Z][A-Z0-9 -]+ \\*\" %"
+  let exe_str_verbose     = "r !grep -E -no \"(^[A-Z][A-Z0-9 -]+ \\*|^=== .* ===)\" %"
+  let exe_str_veryverbose = "r !grep -E -no \"(^[A-Z][A-Z0-9 -]+ \\*|^=== .* ===|^.*\~$)\" %"
   let exe_finalize = "normal V't>.gv:s/:/    /g\<CR>'t"
   if len(a:000) > 0 | let verbose = a:000[0] | endif
   if verbose == 1 | let exe_str = exe_str_verbose | endif
