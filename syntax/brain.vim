@@ -228,6 +228,12 @@ syn include @shTop syntax/sh.vim
 syn region shBlock matchgroup=DarkComment start='<%sh%%\@!' end='%%\@!sh%>' contains=@shTop keepend
 unlet b:current_syntax
 
+if filereadable(expand('syntax/typst.vim'))
+    syn include @typstTop syntax/typst.vim
+    syn region typstBlock matchgroup=DarkComment start='<%typ%%\@!' end='%%\@!typ%>' contains=@typstTop keepend
+    unlet b:current_syntax
+endif
+
 syn include @luaTop syntax/lua.vim
 syn region luaBlock matchgroup=DarkComment start='<%lua%%\@!' end='%%\@!lua%>' contains=@luaTop keepend
 unlet b:current_syntax
