@@ -228,7 +228,7 @@ syn include @shTop syntax/sh.vim
 syn region shBlock matchgroup=DarkComment start='<%sh%%\@!' end='%%\@!sh%>' contains=@shTop keepend
 unlet b:current_syntax
 
-if filereadable(expand('syntax/typst.vim'))
+if !empty(findfile('syntax/typst.vim', &runtimepath))
     syn include @typstTop syntax/typst.vim
     syn region typstBlock matchgroup=DarkComment start='<%typ%%\@!' end='%%\@!typ%>' contains=@typstTop keepend
     unlet b:current_syntax
